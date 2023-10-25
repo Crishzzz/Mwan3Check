@@ -1,0 +1,22 @@
+#!/bin/sh
+
+log_file="/etc/mwan3check/log"
+
+echo "=============$(date)=============" >> "$log_file"
+
+while true; do
+    # check the status of mwan3
+    result=$(mwan3 status | grep offline)
+
+    if [ "$result" ]; then
+        # if return value is not none, restart mwan3 service
+	/etc/init.d/mwan3 restart
+	echo "$(date) error" >> "$log_file"
+    else
+    	# if return value is none, mwan3 status OK
+	echo "$(date) OK" >> "$log_file"
+    fi
+
+    sleep 120
+	
+done
