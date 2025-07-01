@@ -1,11 +1,14 @@
 #!/bin/sh
 
+# Set the log_file storage path.
 log_file="/etc/mwan3check/log"
 
+# Insert the date information when option happen.
 echo "=============$(date)=============" >> "$log_file"
 
+# Set status of mwan3 visual ports in order.
 while true; do
-    # check the status of mwan3
+    # check the status of mwan3 and ensure no ports offline.
     result=$(mwan3 status | grep offline)
 
     if [ "$result" ]; then
@@ -16,7 +19,7 @@ while true; do
     	# if return value is none, mwan3 status OK
 	echo "$(date) OK" >> "$log_file"
     fi
-
+# Reserve the time for next workflow. 
     sleep 120
 	
 done
